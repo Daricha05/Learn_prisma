@@ -204,6 +204,24 @@ app.get("/stats/posts/by-user", async (req, res) => {
 })
 
 
+// ==================== TRANSACTIONS ====================
+
+// Créer un user et son premier post en même temps (atomique)
+app.post("/users/with-first-post", async (req, res) => {
+    const { email, name, title, content } = req.body;
+
+    const [user, post] = await prisma.$transaction([
+        prisma.user.create({
+            data: { email, name }
+        }),
+        prisma.post.create({
+            data: { title, content, user: { connect: { email } } }
+        })
+    ])
+
+    res.json({ user, post })
+})
+
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
 })
