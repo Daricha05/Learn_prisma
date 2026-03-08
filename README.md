@@ -1,16 +1,16 @@
 ### Configuration
 
 ```
-npm install prisma --save-dev        # installer Prisma CLI
-npm install @prisma/client           # installer le client
-npx prisma init                      # initialiser Prisma dans un projet
+npm install prisma --save-dev  # installer Prisma CLI
+npm install @prisma/client     # installer le client
+npx prisma init                # initialiser Prisma dans un projet
 
 ```
 
 ### Génération
 
 ```
-npx prisma generate                  # générer/regénérer le client après modif du schema
+npx prisma generate   # générer/regénérer le client après modif du schema
 ```
 
 ### Migrations
@@ -27,17 +27,17 @@ npx prisma migrate diff              # comparer deux états du schema
 ### Graine (données initiales)
 
 ```
-npx prisma db seed                   # exécuter le fichier seed
-npx prisma db push                   # pousser le schema sans créer de migration (prototypage)
-npx prisma db pull                   # importer le schema depuis une DB existante (introspection)
-npx prisma db execute                # exécuter un fichier SQL brut
+npx prisma db seed       # exécuter le fichier seed
+npx prisma db push       # pousser le schema sans créer de migration (prototypage)
+npx prisma db pull       # importer le schema depuis une DB existante (introspection)
+npx prisma db execute    # exécuter un fichier SQL brut
 
 ```
 
 ###  Studio
 
 ```
-npx prisma studio             # ouvrir l'interface visuelle de la DB dans le navigateur
+npx prisma studio   # ouvrir l'interface visuelle de la DB dans le navigateur
 ```
 
 ### Les plus utilisés au quotidien
