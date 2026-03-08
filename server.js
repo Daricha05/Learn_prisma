@@ -134,6 +134,76 @@ app.get("/posts", async (req, res) => {
 })
 
 
+// Récuperer les posts d'un user
+app.get("users/:id/posts", async (req, res) => {
+    const userId = parseInt(req.params.id)
+
+    const posts = await prisma.post.findMany({
+        where: { userId }
+    })
+
+    res.json(posts)
+})
+
+// Recherche dans les posts
+app.get("/search", async (req, res) => {
+
+    const q = req.query.q
+
+    const posts = await prisma.post.findMany({
+        where: {
+            title: {
+                contains: q,
+                mode: "insensitive" // insensible à la casse
+            }
+        }
+    })
+
+    res.json(posts)
+})
+
+// Modifier un post
+app.put("posts/:id", async (req, res) => {
+    const id = parseInt(req.params.id)
+    const { title, content } = req.body;
+
+    const posts = await prisma.post.update({
+        where: { id },
+        data: { title, content }
+    })
+
+    res.json(posts)
+})
+
+// Supprimer un post
+app.delete("/posts/:id", async (req, res) => {
+    const id = parseInt(req.params.id)
+
+    const post = await prisma.post.delete({
+        where: { id }
+    })
+    res.json(post)
+})
+
+// ==================== AGREGATIONS ====================
+
+// Compter tous les posts
+app.get("/stats/posts/count", async (req, res) => {
+    const count = await prisma.post.count()
+    res.json({ count })
+})
+
+// Compter les posts par user
+app.get("/stats/posts/by-user", async (req, res) => {
+    const result = await prisma.post.groupBy({
+        by: ["userId"],
+        _count: { id: true }
+    })
+
+    res.json(result)
+})
+
+
 app.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
 })
